@@ -6,7 +6,8 @@ const isProduction = process.env.NODE_ENV === "production"
 const config = {
     mode: isProduction ? "production" : "development",
     entry: {
-        content: "./src/content/index.tsx"
+        content_top: "./src/content/top/",
+        content_play: "./src/content/play/",
     },
     output: {
         path: path.resolve(__dirname, "public", "assets"),

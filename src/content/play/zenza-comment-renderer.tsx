@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { NicoCommentPlayer } from "../../zenzawatch/src/CommentPlayer";
+import { NicoCommentPlayer } from "../../../zenzawatch/src/CommentPlayer";
 
 export const ZenzaCommentRendererCore: React.FC<{comments: string, currentTime: number}> = props => {
     const [player] = useState(() => new NicoCommentPlayer({

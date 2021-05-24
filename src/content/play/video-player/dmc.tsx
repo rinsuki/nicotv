@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { SimpleVideoPlayer } from "./simple";
 
 export const DMCVideoPlayer: React.FC<{delivery: any, setCurrentTime: (sec: number) => void}> = ({delivery, setCurrentTime}) => {
     const [session, setSession] = useState<any>()
@@ -77,20 +78,7 @@ export const DMCVideoPlayer: React.FC<{delivery: any, setCurrentTime: (sec: numb
         }, delivery.movie.session.heartbeatLifetime/2)
         return () => clearInterval(timer)
     }, [session])
-    const [video, setVideo] = useState<HTMLVideoElement>()
-    useEffect(() => {
-        if (video == null) return
-        const timer = setInterval(() => {
-            setCurrentTime(video.currentTime)
-        }, 100)
-        return () => clearInterval(timer)
-    }, [video, setCurrentTime])
 
     if (session == null) return null
-    
-    return <video src={session.content_uri} ref={v => setVideo(v ?? undefined)} controls autoPlay style={{
-        width: "100%",
-        height: "100%",
-        outline: "none",
-    }}/>
+    return <SimpleVideoPlayer src={session.content_uri} setCurrentTime={setCurrentTime} />
 }
