@@ -17,6 +17,10 @@ export const SimpleVideoPlayer: React.FC<{src: string, playerState: VideoPlayerS
             removePause()
         }
     }, [video, playerState])
+    useEffect(() => {
+        if (video == null) return
+        video.volume = 0.1
+    }, [video])
     
     return <video src={src} ref={v => setVideo(v ?? undefined)} controls autoPlay style={{
         width: "100%",
