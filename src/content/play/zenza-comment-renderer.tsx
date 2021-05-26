@@ -27,7 +27,7 @@ export const ZenzaCommentRendererCore: React.FC<{comments: string, playerState: 
     useEffect(() => {
         player.setComment(props.comments, {format: "json"})
     }, [props.comments])
-    const { currentTime } = props.playerState
+    const { currentTime, paused } = props.playerState
     useEffect(() => {
         try {
             // console.log(props.playerState.currentTime)
@@ -37,6 +37,13 @@ export const ZenzaCommentRendererCore: React.FC<{comments: string, playerState: 
             console.error(e)
         }
     }, [currentTime])
+    useEffect(() => {
+        if (paused) {
+            player._view.pause()
+        } else {
+            player._view.play()
+        }
+    }, [player, paused])
     return <div ref={w => setWrapper(w ?? undefined)} className="zenzaCommentRendererCore" />
 })
 

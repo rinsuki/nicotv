@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { addEventListenerWithRemoveFunction } from "../../utils/ael-with-remove-function";
 import { VideoPlayerState } from "./state";
 
 export const SimpleVideoPlayer: React.FC<{src: string, playerState: VideoPlayerState}> = ({src, playerState}) => {
@@ -8,7 +9,13 @@ export const SimpleVideoPlayer: React.FC<{src: string, playerState: VideoPlayerS
         const timer = setInterval(() => {
             playerState.setCurrentTime(video.currentTime)
         }, 25)
-        return () => clearInterval(timer)
+        const removePlay = addEventListenerWithRemoveFunction(video, "play", playerState.play.bind(playerState))
+        const removePause = addEventListenerWithRemoveFunction(video, "pause", playerState.pause.bind(playerState))
+        return () => {
+            clearInterval(timer)
+            removePlay()
+            removePause()
+        }
     }, [video, playerState])
     
     return <video src={src} ref={v => setVideo(v ?? undefined)} controls autoPlay style={{

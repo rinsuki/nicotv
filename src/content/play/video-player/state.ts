@@ -11,4 +11,12 @@ export class VideoPlayerState {
     setCurrentTime(time: number) {
         this.currentTime = time
     }
+
+    play() {
+        this.paused = false
+    }
+
+    pause() {
+        this.paused = true
+    }
 }
