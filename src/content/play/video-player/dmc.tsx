@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { SimpleVideoPlayer } from "./simple";
+import { VideoPlayerState } from "./state";
 
-export const DMCVideoPlayer: React.FC<{delivery: any, setCurrentTime: (sec: number) => void}> = ({delivery, setCurrentTime}) => {
+export const DMCVideoPlayer: React.FC<{delivery: any, playerState: VideoPlayerState}> = ({delivery, playerState}) => {
     const [session, setSession] = useState<any>()
     useEffect(() => {
         fetch("https://api.dmc.nico/api/sessions?_format=json", {
@@ -80,5 +81,5 @@ export const DMCVideoPlayer: React.FC<{delivery: any, setCurrentTime: (sec: numb
     }, [session])
 
     if (session == null) return null
-    return <SimpleVideoPlayer src={session.content_uri} setCurrentTime={setCurrentTime} />
+    return <SimpleVideoPlayer src={session.content_uri} playerState={playerState} />
 }

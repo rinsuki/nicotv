@@ -4,10 +4,11 @@ import { DMCVideoPlayer } from "./video-player/dmc";
 import { generateActionTrackID } from "../utils/niconico/generate-ati";
 import { ZenzaCommentRenderer } from "./zenza-comment-renderer";
 import { SimpleVideoPlayer } from "./video-player/simple";
+import { VideoPlayerState } from "./video-player/state";
 
 const VideoPlayer: React.FC<{id: string, thread?: string, videoSrc?: string}> = props => {
     const [info, setInfo] = useState<any>()
-    const [currentTime, setCurrentTime] = useState(0)
+    const [playerState] = useState(() => new VideoPlayerState())
     useEffect(() => {
         fetch(`https://www.nicovideo.jp/api/watch/v3_guest/${props.id}?_frontendId=${FRONTEND_ID}&_frontendVersion=0&actionTrackId=${generateActionTrackID()}&isContinueWatching=true`)
             .then(r => r.json())
@@ -22,8 +23,8 @@ const VideoPlayer: React.FC<{id: string, thread?: string, videoSrc?: string}> = 
 
     return <div className="player">
         <title>{info.video.title} ({info.video.id}) - nicotv </title>
-        {vsrc != null ? <SimpleVideoPlayer src={vsrc} setCurrentTime={setCurrentTime} /> : <DMCVideoPlayer delivery={info.media.delivery} setCurrentTime={setCurrentTime} />}
-        <ZenzaCommentRenderer thread={thread} fork={1} duration={300} currentTime={currentTime}/>
+        {vsrc != null ? <SimpleVideoPlayer src={vsrc} playerState={playerState} /> : <DMCVideoPlayer delivery={info.media.delivery} playerState={playerState} />}
+        <ZenzaCommentRenderer thread={thread} fork={1} duration={300} playerState={playerState}/>
     </div>
 }
 
