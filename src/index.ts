@@ -20,7 +20,12 @@ app.whenReady().then(() => {
     const window = new BrowserWindow({
         simpleFullscreen: true,
         webPreferences: {
-            defaultFontFamily: {
+            defaultFontFamily: process.platform === "darwin" ? {
+                standard: "ヒラギノ角ゴシック",
+                serif: "ヒラギノ角ゴシック",
+                sansSerif: "ヒラギノ角ゴシック",
+                monospace: "Menlo",
+            } : {
                 standard: 'M+ 1c',
                 serif: 'M+ 1c',
                 sansSerif: 'M+ 1c',
