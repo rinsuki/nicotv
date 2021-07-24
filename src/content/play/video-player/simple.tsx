@@ -19,7 +19,10 @@ export const SimpleVideoPlayer: React.FC<{src: string, playerState: VideoPlayerS
     }, [video, playerState])
     useEffect(() => {
         if (video == null) return
-        video.volume = 0.1
+        try {
+            video.volume = JSON.parse(localStorage.getItem("video.volume") ?? "0.5")
+        } catch(e) {
+        }
     }, [video])
     
     return <video src={src} ref={v => setVideo(v ?? undefined)} controls autoPlay style={{
@@ -27,6 +30,8 @@ export const SimpleVideoPlayer: React.FC<{src: string, playerState: VideoPlayerS
         height: "100%",
         outline: "none",
         opacity: 0.5,
+    }} onVolumeChange={e => {
+        localStorage.setItem("video.volume", JSON.stringify(e.currentTarget.volume))
     }}/>
 
 }
