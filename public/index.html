@@ -6,7 +6,7 @@
     </div>
 </nav>
 <div class="container mt-4">
-    <div class="rounded-3 border p-4">
+    <div class="rounded-3 border p-4 mb-3">
         <h2 class="mb-3">再生</h2>
         <form id="form" action="javascript://" class="mb-0">
             <div class="mb-3">
@@ -43,7 +43,13 @@
                 </div>
             </div>
             <input type="submit" class="btn btn-primary" value="再生">
+            <input type="button" class="btn btn-outline-primary" value="ピン留めする" id="addpinbutton">
         </form>
+    </div>
+    <div class="rounded-3 border p-4">
+        <h2 class="mb-3">ピン留め</h2>
+        <ul id="pinned_list">
+        </ul>
     </div>
 </div>
 <script src="assets/content_top.js"></script>
