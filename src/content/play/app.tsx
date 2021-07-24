@@ -6,7 +6,7 @@ import { ZenzaCommentRenderer } from "./zenza-comment-renderer";
 import { SimpleVideoPlayer } from "./video-player/simple";
 import { VideoPlayerState } from "./video-player/state";
 
-const VideoPlayer: React.FC<{id: string, thread?: string, videoSrc?: string}> = props => {
+const VideoPlayer: React.FC<{id: string, thread?: string, forks: number[], videoSrc?: string}> = props => {
     const [info, setInfo] = useState<any>()
     const [playerState] = useState(() => new VideoPlayerState())
     useEffect(() => {
@@ -24,11 +24,13 @@ const VideoPlayer: React.FC<{id: string, thread?: string, videoSrc?: string}> = 
     return <div className="player">
         <title>{info.video.title} ({info.video.id}) - nicotv </title>
         {vsrc != null ? <SimpleVideoPlayer src={vsrc} playerState={playerState} /> : <DMCVideoPlayer delivery={info.media.delivery} playerState={playerState} />}
-        <ZenzaCommentRenderer thread={thread} fork={1} duration={300} playerState={playerState}/>
+        <ZenzaCommentRenderer thread={thread} forks={props.forks} duration={300} playerState={playerState}/>
     </div>
 }
 
 export const App: React.FC = props => {
     const params = new URL(location.href).searchParams
-    return <VideoPlayer id={params.get("id")!} thread={params.get("thread") ?? undefined} videoSrc={params.get("vsrc") ?? undefined} />
+    const forks = params.getAll("forks").map(n => parseInt(n, 10)).filter(n => Number.isSafeInteger(n))
+    if (forks.length === 0) forks.push(0, 1)
+    return <VideoPlayer id={params.get("id")!} thread={params.get("thread") ?? undefined} forks={forks} videoSrc={params.get("vsrc") ?? undefined} />
 }

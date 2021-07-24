@@ -21,6 +21,27 @@
                 <label class="form-label">動画src (オプション、file://でローカルのファイルも指定可能)</label>
                 <input type="text" class="form-control" name="vsrc" placeholder="https://example.com/bbb.mp4">
             </div>
+            <div class="mb-3">
+                <label class="form-label">コメントfork</label>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="forks" value="0" checked>
+                        通常のコメント (fork=0)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="forks" value="1" checked>
+                        投稿者コメント (fork=1)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="forks" value="2">
+                        かんたんコメント (fork=2)
+                    </label>
+                </div>
+            </div>
             <input type="submit" class="btn btn-primary" value="再生">
         </form>
     </div>
